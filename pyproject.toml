@@ -2,7 +2,7 @@
 name = "climbingtrainerapi"
 version = "0.1.0"
 description = ""
-authors = ["Karol Puchała <karol.puchala@smartfactor.pl>"]
+authors = ["Karol Puchała <puchala1.karol@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
