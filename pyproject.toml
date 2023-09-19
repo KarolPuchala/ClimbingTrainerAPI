@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "climbingtrainerapi"
+version = "0.1.0"
+description = ""
+authors = ["Karol Puchała <karol.puchala@smartfactor.pl>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.101.0"
+sqlalchemy = "^2.0.19"
+psycopg2-binary = "^2.9.7"
+uvicorn = "^0.23.2"
+
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.4.1"
+pytest = "^7.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
