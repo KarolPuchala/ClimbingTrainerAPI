@@ -1,8 +1,11 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, PositiveInt, Field, EmailStr
 
 
 class UserSchema(BaseModel):
-    id: int
-    name: str
-    email: str
+    id: PositiveInt
+    name: str = Field(min_length=3, max_length=50)
+    email: EmailStr
     password: str
+
+    class Config:
+        orm_mode = True

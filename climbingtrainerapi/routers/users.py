@@ -1,7 +1,9 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from climbingtrainerapi.database import get_db
+from climbingtrainerapi.repositories.users import create
 
 from climbingtrainerapi.schemas.users import UserSchema
-
 
 router = APIRouter(
     prefix='/users',
@@ -10,8 +12,14 @@ router = APIRouter(
 
 
 @router.post('/', status_code=201)
-async def add(user: UserSchema) -> dict[str, str]:
-    return {'message': f'Add new user {user.name}'}
+async def add(user: UserSchema, db: Session = Depends(get_db)):
+    create(
+        db=db,
+        name=user.name,
+        email=user.email,
+        password=user.password,
+    )
+
 
 
 @router.get("/{user_id}")
