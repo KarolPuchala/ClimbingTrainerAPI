@@ -1,13 +1,12 @@
 from fastapi import FastAPI, Request, Response
 from sqlalchemy.orm import sessionmaker
 from climbingtrainerapi.routers import users
-from climbingtrainerapi.database import engine, init_db
+from climbingtrainerapi.database import engine
 
 app = FastAPI()
 
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
 
 
 @app.middleware('http')

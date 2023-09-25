@@ -1,7 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from climbingtrainerapi.database import Base, engine
-
-Base.metadata.create_all(engine)
+from climbingtrainerapi.database import Base
 
 
 class User(Base):
