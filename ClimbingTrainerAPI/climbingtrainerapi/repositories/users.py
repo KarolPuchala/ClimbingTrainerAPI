@@ -3,8 +3,8 @@ from sqlalchemy import update
 from climbingtrainerapi.models.users import User
 
 
-def create(db: Session, name: str, email: str, password: str) -> User:
-    db_user = User(name=name, email=email, password=password)
+def create(db: Session, username: str, hashed_password: str, email: str, disabled: bool = False) -> User:
+    db_user = User(username=username, hashed_password=hashed_password, email=email, disabled=disabled)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
