@@ -1,3 +1,4 @@
+from typing import Optional
 from sqlalchemy.orm import Session
 from sqlalchemy import update
 from climbingtrainerapi.models.users import User
@@ -9,6 +10,10 @@ def create(db: Session, username: str, hashed_password: str, email: str, disable
     db.commit()
     db.refresh(db_user)
     return db_user
+
+
+def get_user_by_username(db: Session, username: str) -> Optional[User]:
+    return db.query(User).filter(User.username == username).first()
 
 
 def fetch_one(db: Session, user_id: int) -> User:

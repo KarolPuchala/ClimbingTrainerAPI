@@ -5,7 +5,7 @@ from jose import jwt
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from climbingtrainerapi.database import get_db
-from climbingtrainerapi.repositories.users import create, delete_one, fetch_one, update_by_id
+from climbingtrainerapi.repositories.users import create, delete_one, fetch_one, get_user_by_username, update_by_id
 
 from climbingtrainerapi.schemas.users import UserSchema, UserInDB
 
@@ -33,19 +33,12 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
 
 
 def authenticate_user(db, username: str, password: str) -> UserInDB | bool:
-    user = get_user(db, username)
+    user = get_user_by_username(db, username)
     if not user:
         return False
     if not verify_password(password, user.hashed_password):
         return False
     return user
-
-
-def get_user(db, username: str):
-    if username in db:
-        user_dict = db[username]
-        return UserInDB(**user_dict)
-
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -57,7 +50,7 @@ def get_password(password: str) -> str:
 
 
 @router.post("/token")
-async def login_for_access_token(db, form_data: OAuth2PasswordRequestForm = Depends()):
+async def login_for_access_token(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends()):
     user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
